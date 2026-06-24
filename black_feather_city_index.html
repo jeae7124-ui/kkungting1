@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>검은 깃의 도시 | 흑익공위 사건</title>
+  <style>
+    :root {
+      --bg: #040405;
+      --bg-2: #09090b;
+      --panel: rgba(14, 14, 16, 0.82);
+      --panel-strong: rgba(18, 16, 17, 0.93);
+      --line: rgba(208, 179, 124, 0.2);
+      --line-strong: rgba(208, 179, 124, 0.42);
+      --gold: #cfb07d;
+      --gold-soft: #f0e2c9;
+      --muted: #958977;
+      --red: #8d1015;
+      --red-hot: #ef2f39;
+      --red-glow: rgba(239, 47, 57, 0.24);
+      --teal: #1f8a9c;
+      --teal-deep: #145766;
+      --cyan: #67d7e7;
+      --cyan-soft: #a8eef5;
+      --cyan-glow: rgba(103, 215, 231, 0.28);
+      --petrol: #102f3b;
+      --ink: #0b0a0b;
+      --white: #f5efe6;
+      --shadow: rgba(0, 0, 0, 0.78);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 10% 7%, rgba(239,47,57,0.18), transparent 30%),
+        radial-gradient(circle at 78% 10%, rgba(103,215,231,0.18), transparent 27%),
+        radial-gradient(circle at 48% 92%, rgba(31,138,156,0.18), transparent 38%),
+        linear-gradient(180deg, #030304 0%, #071014 42%, #050506 100%);
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Noto Sans KR", "Segoe UI", sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 4px 4px;
+      opacity: 0.18;
+      mix-blend-mode: overlay;
+      z-index: 40;
+    }
+
+    body::after {
+      content: "BLACK FEATHER CITY • SPECIAL DOSSIER • 11·17 • BLACK FEATHER CITY • SPECIAL DOSSIER • 11·17";
+      position: fixed;
+      left: -180px;
+      top: 54%;
+      transform: rotate(-90deg);
+      color: rgba(207,176,125,0.14);
+      letter-spacing: 0.34em;
+      font-size: 11px;
+      pointer-events: none;
+      z-index: 1;
+      white-space: nowrap;
+    }
+
+
+
+    .neon-rule {
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(90deg, transparent, var(--cyan), var(--red-hot), transparent);
+      opacity: 0.55;
+      box-shadow: 0 0 18px rgba(103,215,231,0.42);
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+
+    .shell {
+      width: min(1240px, calc(100% - 34px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .topbar {
+      height: 78px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(180deg, rgba(5,5,7,0.88), rgba(5,5,7,0.5));
+      z-index: 30;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(103,215,231,0.45);
+      color: var(--cyan-soft);
+      box-shadow: 0 0 28px rgba(103,215,231,0.18), inset 0 0 18px rgba(103,215,231,0.06);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .brand small {
+      display: block;
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
+      color: var(--muted);
+      letter-spacing: 0.18em;
+      margin-top: 4px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .nav a {
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+
+    .nav a:hover { color: var(--gold); }
+
+    .hero {
+      min-height: calc(100vh - 78px);
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 34px;
+      align-items: center;
+      padding: 56px 0 74px;
+    }
+
+    .hero-copy {
+      position: relative;
+      padding-right: 10px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 13px;
+      border: 1px solid rgba(103,215,231,0.42);
+      background: linear-gradient(90deg, rgba(103,215,231,0.09), rgba(207,176,125,0.05));
+      color: var(--cyan-soft);
+      box-shadow: 0 0 24px rgba(103,215,231,0.12);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--cyan);
+      box-shadow: 0 0 18px var(--cyan);
+    }
+
+    .hero h1 {
+      margin: 26px 0 16px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(66px, 9vw, 130px);
+      line-height: 0.86;
+      letter-spacing: -0.08em;
+      text-transform: uppercase;
+      text-shadow:
+        0 22px 80px var(--shadow),
+        0 0 34px rgba(103,215,231,0.13);
+    }
+
+    .hero h1 span {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(245,239,230,0.7);
+      text-shadow: none;
+    }
+
+    .subline {
+      color: #a9b4b6;
+      font-size: 15px;
+      text-shadow: 0 0 18px rgba(103,215,231,0.1);
+      line-height: 1.9;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      max-width: 560px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .meta-card {
+      min-height: 105px;
+      padding: 18px;
+      border: 1px solid rgba(103,215,231,0.22);
+      background:
+        linear-gradient(180deg, rgba(103,215,231,0.055), rgba(255,255,255,0.015)),
+        linear-gradient(135deg, rgba(239,47,57,0.05), transparent 60%);
+      box-shadow: inset 0 0 0 1px rgba(207,176,125,0.06), 0 0 26px rgba(103,215,231,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .meta-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 90px;
+      height: 90px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(207,176,125,0.15), transparent 70%);
+    }
+
+    .meta-card b {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      color: var(--cyan-soft);
+      text-shadow: 0 0 16px rgba(103,215,231,0.22);
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+
+    .meta-card small {
+      display: block;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .hero-stack {
+      position: relative;
+      min-height: 740px;
+      display: grid;
+      align-content: center;
+      gap: 20px;
+      padding: 16px 0 16px 44px;
+    }
+
+    .hero-stack::before,
+    .hero-stack::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(207,176,125,0.18);
+      pointer-events: none;
+    }
+
+    .hero-stack::before { inset: 24px 20px 80px 80px; border-color: rgba(103,215,231,0.26); }
+    .hero-stack::after  { inset: 72px 0 22px 34px; border-color: rgba(239,47,57,0.28); box-shadow: 0 0 42px rgba(103,215,231,0.05); }
+
+    .portrait-card {
+      position: relative;
+      border: 1px solid rgba(103,215,231,0.32);
+      background: #0b0b0c;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.66), 0 0 34px rgba(103,215,231,0.09);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .portrait-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.68) 100%),
+        linear-gradient(90deg, rgba(0,0,0,0.45), transparent 36%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .portrait-main {
+      width: min(100%, 720px);
+      transform: rotate(1deg);
+    }
+
+    .portrait-main img {
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      width: 100%;
+      filter: brightness(0.9) contrast(1.04) saturate(0.9);
+    }
+
+    .portrait-sub {
+      width: min(72%, 500px);
+      margin-left: auto;
+      margin-top: -36px;
+      transform: rotate(-2deg);
+      border-color: rgba(239,47,57,0.45);
+      box-shadow: 0 28px 80px rgba(0,0,0,0.68), 0 0 34px rgba(239,47,57,0.14), 0 0 26px rgba(103,215,231,0.08);
+    }
+
+    .portrait-sub img {
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      width: 100%;
+      filter: brightness(0.88) contrast(1.05) saturate(0.92);
+    }
+
+    .stamp {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      z-index: 3;
+      padding: 8px 10px;
+      border: 1px solid rgba(103,215,231,0.48);
+      background: rgba(0,0,0,0.3);
+      color: var(--cyan-soft);
+      letter-spacing: 0.18em;
+      font-size: 10px;
+      transform: rotate(4deg);
+    }
+
+    .portrait-label {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      z-index: 3;
+    }
+
+    .portrait-label small {
+      display: block;
+      color: var(--cyan-soft);
+      text-shadow: 0 0 14px rgba(103,215,231,0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      font-size: 10px;
+      margin-bottom: 4px;
+    }
+
+    .portrait-label h2,
+    .portrait-label h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+    }
+
+    .portrait-label h2 { font-size: clamp(40px, 5vw, 64px); }
+    .portrait-label h3 { font-size: clamp(28px, 3.8vw, 44px); }
+
+    section {
+      padding: 80px 0;
+      border-top: 1px solid rgba(207,176,125,0.12);
+      position: relative;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(36px, 5vw, 80px);
+      line-height: 0.9;
+      text-transform: uppercase;
+      letter-spacing: -0.06em;
+    }
+
+    .case-board {
+      display: grid;
+      grid-template-columns: 0.84fr 1.16fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .magazine {
+      position: relative;
+      border: 1px solid rgba(103,215,231,0.28);
+      background: rgba(14,13,14,0.96);
+      padding: 12px;
+      overflow: hidden;
+      box-shadow: 0 32px 90px rgba(0,0,0,0.62), 0 0 38px rgba(103,215,231,0.1);
+    }
+
+    .magazine::before {
+      content: "SCANDAL FILE / DIRTY PRINT / NOT FOR ARCHIVE";
+      position: absolute;
+      top: 22px;
+      left: -62px;
+      transform: rotate(-34deg);
+      padding: 8px 76px;
+      color: #0b0806;
+      background: linear-gradient(90deg, rgba(103,215,231,0.92), rgba(207,176,125,0.9));
+      letter-spacing: 0.18em;
+      font-size: 10px;
+      z-index: 2;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+
+    .magazine img {
+      width: 100%;
+      height: 100%;
+      min-height: 640px;
+      object-fit: cover;
+      filter: brightness(0.92) contrast(1.03);
+    }
+
+    .article {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(207,176,125,0.25);
+      background:
+        radial-gradient(circle at top right, rgba(103,215,231,0.16), transparent 30%),
+        radial-gradient(circle at 10% 8%, rgba(239,47,57,0.16), transparent 34%),
+        linear-gradient(180deg, rgba(19,17,18,0.96), rgba(8,12,14,0.93));
+      box-shadow: 0 32px 90px rgba(0,0,0,0.46), 0 0 52px rgba(103,215,231,0.08);
+      padding: clamp(24px, 4vw, 42px);
+    }
+
+    .article::after {
+      content: "1117";
+      position: absolute;
+      right: -12px;
+      bottom: -34px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 170px;
+      line-height: 1;
+      color: rgba(207,176,125,0.05);
+      letter-spacing: -0.08em;
+      pointer-events: none;
+    }
+
+    .issue-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      color: var(--cyan-soft);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .case-tag {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 7px 12px;
+      border-left: 2px solid var(--cyan);
+      background: linear-gradient(90deg, rgba(103,215,231,0.08), rgba(255,255,255,0.03));
+      box-shadow: 0 0 24px rgba(103,215,231,0.08);
+      color: #d6cab8;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .headline {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(48px, 6vw, 86px);
+      line-height: 0.94;
+      letter-spacing: -0.09em;
+      word-break: keep-all;
+    }
+
+    .headline .red {
+      color: var(--red-hot);
+      text-shadow: 0 0 22px rgba(239,47,57,0.34), 0 0 12px rgba(103,215,231,0.15);
+    }
+
+    .dek {
+      margin: 24px 0 28px;
+      color: #d8cfbf;
+      line-height: 1.9;
+      font-size: 18px;
+      word-break: keep-all;
+    }
+
+    .redacted {
+      display: inline-block;
+      min-width: 9ch;
+      height: 0.95em;
+      vertical-align: -0.1em;
+      background: #070707;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 28px 0 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tab {
+      appearance: none;
+      border: 1px solid rgba(207,176,125,0.3);
+      background: rgba(255,255,255,0.035);
+      color: var(--white);
+      padding: 10px 14px;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      transition: 0.2s ease;
+    }
+
+    .tab:hover,
+    .tab.active {
+      background: linear-gradient(90deg, rgba(20,87,102,0.62), rgba(141,16,21,0.34));
+      border-color: rgba(103,215,231,0.54);
+      color: #fff;
+      box-shadow: 0 0 0 1px rgba(103,215,231,0.18), 0 0 30px rgba(103,215,231,0.16);
+    }
+
+    .briefing {
+      min-height: 170px;
+      border-left: 2px solid var(--cyan);
+      padding: 6px 0 6px 18px;
+      color: #d5cbbb;
+      line-height: 1.92;
+      font-size: 16px;
+      word-break: keep-all;
+      position: relative;
+      z-index: 2;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      counter-reset: item;
+    }
+
+    .step {
+      position: relative;
+      min-height: 260px;
+      padding: 24px 22px 24px;
+      border: 1px solid rgba(103,215,231,0.22);
+      background:
+        linear-gradient(180deg, rgba(103,215,231,0.045), rgba(255,255,255,0.015)),
+        radial-gradient(circle at 100% 0%, rgba(239,47,57,0.13), transparent 34%),
+        radial-gradient(circle at 0% 100%, rgba(103,215,231,0.1), transparent 42%);
+      box-shadow: 0 0 28px rgba(103,215,231,0.055);
+      overflow: hidden;
+    }
+
+    .step::before {
+      counter-increment: item;
+      content: "0" counter(item);
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 64px;
+      line-height: 1;
+      color: rgba(207,176,125,0.12);
+    }
+
+    .step b {
+      display: block;
+      margin-bottom: 18px;
+      color: var(--cyan-soft);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .step h3 {
+      margin: 0 0 14px;
+      font-size: 22px;
+      color: var(--white);
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.82;
+      word-break: keep-all;
+    }
+
+    .footer {
+      padding: 46px 0 60px;
+      color: rgba(245,239,230,0.44);
+      border-top: 1px solid rgba(207,176,125,0.12);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .case-board {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stack {
+        min-height: auto;
+        padding-left: 18px;
+      }
+
+      .portrait-sub {
+        width: min(78%, 520px);
+      }
+
+      .timeline {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .magazine img {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .shell { width: min(100% - 20px, 1240px); }
+      .topbar {
+        height: auto;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 18px 0;
+      }
+      .nav { display: none; }
+      .meta-grid,
+      .timeline { grid-template-columns: 1fr; }
+      .issue-line,
+      .section-title { display: block; }
+      .portrait-sub {
+        width: 88%;
+        margin-top: -20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell topbar">
+    <div class="brand" aria-label="검은 깃의 도시">
+      <div class="brand-mark">羽</div>
+      <div>
+        <div>Black Feather City</div>
+        <small>검은 깃의 도시</small>
+      </div>
+    </div>
+    <nav class="nav" aria-label="페이지 이동">
+      <a href="#suwoo">권수우</a>
+      <a href="#case">흑익공위 사건</a>
+      <a href="#timeline">사건 기록</a>
+    </nav>
+  </header>
+  <div class="neon-rule" aria-hidden="true"></div>
+
+  <main>
+    <section class="shell hero" id="suwoo">
+      <div class="hero-copy reveal">
+        <div class="kicker">Classified scandal dossier</div>
+        <h1>Black <span>Feather</span></h1>
+        <div class="subline">권수우 · 륜오재 · 흑익궁 백야연회장 · 11·17 · 흑익공위 사건</div>
+
+        <div class="meta-grid" role="list" aria-label="사건 기본 정보">
+          <article class="meta-card" role="listitem">
+            <b>11·17</b>
+            <small>검은 깃 11·17<br />흑익공위 사건</small>
+          </article>
+          <article class="meta-card" role="listitem">
+            <b>23:47</b>
+            <small>백야연회장<br />사건 발생 시각</small>
+          </article>
+          <article class="meta-card" role="listitem">
+            <b>왕좌 공석</b>
+            <small>백서후 사망<br />전왕 금이건 실종</small>
+          </article>
+        </div>
+      </div>
+
+      <aside class="hero-stack reveal" aria-label="권수우 및 륜오재 이미지">
+        <figure class="portrait-card portrait-main">
+          <span class="stamp">SURVIVOR / OWL</span>
+          <img src="https://raw.githubusercontent.com/jeae7124-ui/kkungting1/main/ezgif.com-video-to-webp-converter%20%281%29.webp" alt="권수우 이미지" />
+          <figcaption class="portrait-label">
+            <small>Returned from the trap</small>
+            <h2>권수우</h2>
+          </figcaption>
+        </figure>
+
+        <figure class="portrait-card portrait-sub">
+          <span class="stamp">CROW / REBELLION</span>
+          <img src="https://raw.githubusercontent.com/jeae7124-ui/kkungting1/main/ChatGPT%20Image%202026%EB%85%84%206%EC%9B%94%2024%EC%9D%BC%20%EC%98%A4%ED%9B%84%2011_26_45.png" alt="륜오재 이미지" />
+          <figcaption class="portrait-label">
+            <small>Heard the throne go empty</small>
+            <h3>륜오재</h3>
+          </figcaption>
+        </figure>
+      </aside>
+    </section>
+
+    <section class="shell" id="case">
+      <div class="section-title reveal">
+        <h2>Scandal<br />Magazine</h2>
+      </div>
+
+      <div class="case-board">
+        <figure class="magazine reveal">
+          <img src="https://raw.githubusercontent.com/jeae7124-ui/kkungting1/main/HKdvOl1aAAA4VIw.jpg" alt="흑익공위 사건 찌라시 스캔본 이미지" />
+        </figure>
+
+        <article class="article reveal">
+          <div class="issue-line">
+            <span>Black Feather City Scandal Magazine</span>
+            <span>Special Issue / Vol. 117</span>
+          </div>
+
+          <div class="case-tag">검은 깃 1117 (흑익공위 사건)</div>
+          <h2 class="headline">까마귀의 <span class="red">반란</span></h2>
+
+          <p class="dek">
+            백서후 왕 후보는 목숨을 잃었고 전왕 금이건은 실종되었다. 아수라장 속에서 권수우는 죽지 않았다.
+            전왕의 마지막 코드는 (<span class="redacted" aria-label="검열됨"></span>)의 몸 안에 숨겨졌다는 소문만 무성하다.
+          </p>
+
+          <div class="tabs" role="tablist" aria-label="기사 관점 선택">
+            <button class="tab active" type="button" data-mode="official">공식 발표</button>
+            <button class="tab" type="button" data-mode="rumor">찌라시 원문</button>
+            <button class="tab" type="button" data-mode="underworld">암시장 요약</button>
+          </div>
+
+          <div class="briefing" id="briefing">
+            흑익궁 백야연회장에서 발생한 쿠테타. 상류층의 지지를 받던 백서후 왕 후보가 제거되었으며, 륜오재의 개입 정황이 복수의 비공식 경로에서 제기됐다. 권수우는 사망자 명단에 오르지 않았고, 그 생존 자체가 다음 왕좌의 게임 체인저가 되었다.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell" id="timeline">
+      <div class="section-title reveal">
+        <h2>Night<br />Record</h2>
+      </div>
+
+      <div class="timeline">
+        <article class="step reveal">
+          <b>Opening</b>
+          <h3>백야연회 개막</h3>
+          <p>백서후 후보가 상류층의 지지를 등에 업고 연회장 중앙에 선다. 검은 깃의 도시는 평온했다, 적어도 그때까진.</p>
+        </article>
+
+        <article class="step reveal">
+          <b>Trigger</b>
+          <h3>까마귀의 반란</h3>
+          <p>륜오재가 판을 뒤집는다. 백서후를 향한 타격과 함께, 왕좌는 비기 시작했고 백야연회장은 순식간에 아수라장이 되었다.</p>
+        </article>
+
+        <article class="step reveal">
+          <b>Survival</b>
+          <h3>권수우 생존</h3>
+          <p>죽었어야 할 이름이 사망자 명단에 오르지 않았다. 권수우가 살아 돌아오면서 그 밤은 학살이 아니라 권력전이 되었다.</p>
+        </article>
+
+        <article class="step reveal">
+          <b>Code</b>
+          <h3>전왕의 코드의 행방</h3>
+          <p>전왕의 코드의 행방은 어디에? 무명의 도시 출신 인물의 몸 안에 숨겨진 채로 그 인물은 사라졌다.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell footer">
+    © BLACK FEATHER CITY DOSSIER. Fan-made fictional archive page for 육계도시 / 검은 깃의 도시.
+  </footer>
+
+  <script>
+    const briefings = {
+      official: `흑익궁 백야연회장에서 발생한 쿠테타. 상류층의 지지를 받던 백서후 왕 후보가 제거되었으며, 륜오재의 개입 정황이 복수의 비공식 경로에서 제기됐다. 권수우는 사망자 명단에 오르지 않았고, 그 생존 자체가 다음 왕좌의 게임 체인저가 되었다.`,
+      rumor: `“까마귀가 웃는 순간, 백조의 목이 꺾였다.” 그러나 수리부엉이가 살아 돌아오면서 그 밤의 승자는 아직 확정되지 않았다.`,
+      underworld: `백서후 사망. 권수우 생존. 륜오재 부상 여부 불명. 전왕의 마지막 코드 행방 불명. 각 조직은 즉시 매입가를 갱신했고, 무명의 도시 출신 관련 정보가 최고가로 뛰었다.`
+    };
+
+    const briefingBox = document.querySelector('#briefing');
+    const tabs = document.querySelectorAll('.tab');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((item) => item.classList.remove('active'));
+        tab.classList.add('active');
+        briefingBox.textContent = briefings[tab.dataset.mode];
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+  </script>
+</body>
+</html>
